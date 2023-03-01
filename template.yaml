@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  afbsub_lambda
+  AFBSubLambda
 
   Lambda function which runs periodically and checks AF bostäder for new apartments that might be of interest to me.
 
@@ -23,10 +23,10 @@ Resources:
       Policies:
         - AmazonDynamoDBFullAccess
         - AmazonSESFullAccess
-      Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
-          Properties:
-            Path: /hello
-            Method: get
+      # Events:
+      #   HelloWorld:
+      #     Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+      #     Properties:
+      #       Path: /hello
+      #       Method: get
 

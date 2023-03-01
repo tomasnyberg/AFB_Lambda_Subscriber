@@ -5,7 +5,7 @@ version = 0.1
 [default]
 [default.global]
 [default.global.parameters]
-stack_name = "afbsub_lambda"
+stack_name = "AFBSubLambda"
 
 [default.build]
 [default.build.parameters]
@@ -17,6 +17,11 @@ parallel = true
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = true
 resolve_s3 = true
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-9n8iiagcb51o"
+s3_prefix = "AFBSubLambda"
+region = "eu-north-1"
+disable_rollback = true
+image_repositories = []
 
 [default.package]
 [default.package.parameters]
