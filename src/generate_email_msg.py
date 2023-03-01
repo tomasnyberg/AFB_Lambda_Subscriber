@@ -36,4 +36,37 @@ def find_apartments():
         apartments.append(p)
     return apartments
 
-print(find_apartments())
+def generate_email_html():
+    apartments = find_apartments()
+    if not apartments:
+        return False
+    def generate_one_apartment_html(apartment):
+        return f"""
+<div>
+    <h2>{apartment.get('area', '')} - {apartment.get('shortDescription', '')}</h2>
+    <ul style="font-size: 20px">
+        <li>{apartment.get('description', '')}</li>
+        <li>{apartment.get('sqrMtrs', '')} m^2</li>
+        <li>Våning {apartment.get('floor', '')}</li>
+        <li>Inflyttningsdatum: {apartment.get('moveInDate', '')}</li>
+        <li>Hyra: {apartment.get('rent', '')}</li>
+        <li>Köplats: {apartment.get('queueNumber', '')}</li>
+        <li>Sista ansökningsdatum: {apartment.get('reserveUntilDate', '')}</li>
+    </ul>
+</div>
+    """
+    template = f"""
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AFB email</title>
+</head>
+<body>
+{"".join([generate_one_apartment_html(apartment) for apartment in apartments])}
+</body>
+</html>
+"""
+    return template
+
+print(generate_email_html())
