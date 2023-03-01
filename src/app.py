@@ -19,9 +19,9 @@ def lambda_handler(event, context):
     subject = "test subject from lambda"
     body = msg
     message = {"Subject": {"Data": subject}, "Body": {"Html": {"Data": body}}}
-    response = client.send_email(Source = "tomas.nyberg7335@gmail.com",
-               Destination = {"ToAddresses": ["tomas.nyberg7335@gmail.com"]}, Message = message)
-
+    # response = client.send_email(Source = "tomas.nyberg7335@gmail.com",
+    #            Destination = {"ToAddresses": ["tomas.nyberg7335@gmail.com"]}, Message = message)
+    print(body)
     return {
         "statusCode": 200,
         "body": json.dumps({
