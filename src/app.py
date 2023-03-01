@@ -1,13 +1,7 @@
 import json
 import boto3
 
-dynamodb = boto3.client('dynamodb')
-table_name = 'AF_bot_table'
-results = dynamodb.scan(TableName=table_name, ProjectionExpression='apartments')
-
-msg = ""
-for res in results['Items']:
-    msg += res['apartments']['S'] + "\n"
+msg = "" 
 
 import requests
 
