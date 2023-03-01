@@ -15,7 +15,7 @@ def get_already_sent(production=False):
         return result
     else:
         result = set()
-        for s in "11931 2023-02-24", "11992 2023-02-24", "3462 2023-03-01":
+        for s in "11931 2023-02-24", "11992 2023-02-24":
             result.add(s)
         return result
     
@@ -23,4 +23,17 @@ def load_all_data():
     response = requests.get(url) ## TODO add auth
     return json.loads(response.text)
 
-print(load_all_data())
+def find_apartments():
+    d = load_all_data()
+    already_sent = get_already_sent()
+    apartments = []
+    for p in d['product']:
+        if p['type'] != "Lägenhet": continue
+        if not (p['area'] in ['Dammhagen', 'Marathon', 'Magasinet']): continue
+        seen_string = p['productId'] + " " + p['reserveFromDate']
+        if seen_string in already_sent: continue
+        # TODO write seen apartments to dynamodb
+        apartments.append(p)
+    return apartments
+
+print(find_apartments())
