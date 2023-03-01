@@ -68,5 +68,3 @@ def generate_email_html():
 </html>
 """
     return template
-
-print(generate_email_html())

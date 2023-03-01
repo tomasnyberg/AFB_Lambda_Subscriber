@@ -1,24 +1,16 @@
 import json
 import boto3
-
-msg = "" 
-
+from generate_email_msg import generate_email_html
 import requests
 
-r = requests.get('https://swapi.dev/api/people/1/')
-msg += (r.json()['name'])
-
 def lambda_handler(event, context):
+    msg = generate_email_html()
+    if not msg:
+        return "No new apartments"
     client = boto3.client("ses")
     subject = "test subject from lambda"
     body = msg
     message = {"Subject": {"Data": subject}, "Body": {"Html": {"Data": body}}}
-    # response = client.send_email(Source = "tomas.nyberg7335@gmail.com",
-    #            Destination = {"ToAddresses": ["tomas.nyberg7335@gmail.com"]}, Message = message)
-    print(body)
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "Hej hopp",
-        }),
-    }
+    response = client.send_email(Source = "tomas.nyberg7335@gmail.com",
+               Destination = {"ToAddresses": ["tomas.nyberg7335@gmail.com"]}, Message = message)
+    return "Found new apartments, sending email"
