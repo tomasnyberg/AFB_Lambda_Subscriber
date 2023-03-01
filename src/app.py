@@ -1,7 +1,7 @@
 import json
 import boto3
-from generate_email_msg import generate_email_html
 import requests
+from generate_email_msg import generate_email_html
 
 def lambda_handler(event, context):
     msg = generate_email_html()

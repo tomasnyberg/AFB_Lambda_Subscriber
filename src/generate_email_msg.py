@@ -3,11 +3,11 @@ import json
 import requests
 
 url = "https://api.afbostader.se:442/redimo/rest/vacantproducts?lang=sv_SE&type=1"
+dynamodb = boto3.client('dynamodb')
+table_name = 'AF_bot_table'
 
-def get_already_sent(production=False):
+def get_already_sent(production=True):
     if production:
-        dynamodb = boto3.client('dynamodb')
-        table_name = 'AF_bot_table'
         results = dynamodb.scan(TableName=table_name, ProjectionExpression='apartments')
         result = set()
         for res in results['Items']:
@@ -32,7 +32,12 @@ def find_apartments():
         if not (p['area'] in ['Dammhagen', 'Marathon', 'Magasinet']): continue
         seen_string = p['productId'] + " " + p['reserveFromDate']
         if seen_string in already_sent: continue
-        # TODO write seen apartments to dynamodb
+        dynamodb.put_item(
+        TableName=table_name,
+            Item={
+                'apartments': {'S': seen_string}
+                }
+        )
         apartments.append(p)
     return apartments
 
